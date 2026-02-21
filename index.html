@@ -718,7 +718,7 @@
     <div class="contact-info-list" id="contact-info">
       <div class="contact-info-item">
         <div class="label">Email</div>
-        <div class="value"><a href="#" id="c-email">hello@qalasiti.com</a></div>
+        <div class="value"><a href="#" id="c-email"><span class="__cf_email__" data-cfemail="0d65686161624d7c6c616c7e647964236e6260">[email&#160;protected]</span></a></div>
       </div>
       <div class="contact-info-item">
         <div class="label">Phone</div>
@@ -777,11 +777,11 @@
   <div class="footer-copy">© 2025 Qalasiti. All rights reserved.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ══════════════════════════════════════════════
 // ⚙️  PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
 // ══════════════════════════════════════════════
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFWt4oFy_2uitkqTJBXkESF3ikG3WKyvOtf00CFIIhrAT5UKuZQ_8huSbEOyzVFdgq/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
 // ══════════════════════════════════════════════
 
 // ── LOADER ──────────────────────────────────
@@ -813,27 +813,63 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// ── FALLBACK DATA (shown immediately; overridden once Sheet connects) ──
+const FALLBACK = {
+  hero: {
+    tagline: 'Art of the Earth.',
+    subtitle: 'Where Indian heritage meets contemporary form — crafted by artisans, worn by the world.',
+    cta_text: 'Explore Collection',
+    cta_link: '#products'
+  },
+  content: [
+    { section: 'mission', title: 'Our Mission', body: 'To create modern formal and semi-formal wear that seamlessly blends Indian artisanal heritage with contemporary western silhouettes — empowering individuals to wear culture with confidence, dignity, and global relevance.\n\nWe collaborate directly with artisans across India — from Kashmir to Kanyakumari — to transform traditional art forms into refined, structured, and wearable expressions for today\'s professional world.' },
+    { section: 'vision', title: 'Our Vision', body: 'To build a globally recognized platform where Indian heritage becomes a natural part of contemporary formal fashion — not as costume, but as culture integrated into everyday identity.\n\nFrom one state at a time, we aim to create a living archive of India\'s diverse art traditions — stitched into garments that move confidently across borders, boardrooms, and generations.' },
+    { section: 'manifesto', title: 'Art of the Earth.', body: 'Indian art is not dying because it lacks beauty.\nIt is fading because it lacks access.\n\nQalasiti exists to change that.\n\nWe work directly with artisans in small districts and heritage clusters — building fair partnerships, ensuring dignified wages, and transforming traditional craftsmanship into contemporary formal wear for a global audience.\n\nEvery garment is a bridge:\nBetween artisan and world.\nBetween heritage and modernity.\nBetween craft and commerce.\n\nWear impact. Wear responsibility. Wear the art of the earth.' }
+  ],
+  products: [
+    { id:'P001', name:'Kashmir Shawl Blazer', description:'A structured blazer featuring hand-embroidered Kashmiri paisley motifs on premium wool. Tailored for the modern boardroom.', price:'12500', original_price:'15000', image_url:'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600', quantity:'10', category:'Blazers', razorpay_link:'', badge:'New', artisan_state:'Jammu & Kashmir', craft_type:'Kani Weave', active:'TRUE' },
+    { id:'P002', name:'Chanderi Formal Shirt', description:'Lightweight Chanderi silk shirt with subtle woven patterns. Breathable, elegant, and effortlessly professional.', price:'4500', original_price:'', image_url:'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600', quantity:'25', category:'Shirts', razorpay_link:'', badge:'Bestseller', artisan_state:'Madhya Pradesh', craft_type:'Chanderi Weave', active:'TRUE' },
+    { id:'P003', name:'Banarasi Waistcoat', description:'A contemporary waistcoat in rich Banarasi brocade — a statement piece that carries centuries of craft.', price:'8500', original_price:'9500', image_url:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600', quantity:'15', category:'Waistcoats', razorpay_link:'', badge:'', artisan_state:'Uttar Pradesh', craft_type:'Banarasi Brocade', active:'TRUE' },
+    { id:'P004', name:'Ikat Structured Kurta', description:'Modern cut kurta in double Ikat fabric from Telangana. Minimal, architectural, and deeply rooted.', price:'6500', original_price:'', image_url:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600', quantity:'4', category:'Kurtas', razorpay_link:'', badge:'Limited', artisan_state:'Telangana', craft_type:'Double Ikat', active:'TRUE' }
+  ],
+  artisans: [
+    { id:'A001', name:'Razia Begum', state:'Jammu & Kashmir', craft:'Kani Weave', bio:'Razia has been weaving Kani shawls in Kanihama village for over 30 years, keeping alive a tradition that dates back to the Mughal era.', image_url:'https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=600', years_experience:'30', active:'TRUE' },
+    { id:'A002', name:'Ramesh Patidar', state:'Madhya Pradesh', craft:'Chanderi Weave', bio:'Third-generation master weaver from Chanderi, Ramesh creates fabric so fine it is called "woven air" by those who wear it.', image_url:'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=600', years_experience:'22', active:'TRUE' },
+    { id:'A003', name:'Yellamma Devi', state:'Telangana', craft:'Double Ikat', bio:'Yellamma learned the intricate resist-dyeing technique of double Ikat from her mother. Each piece takes 3 weeks to complete.', image_url:'https://images.unsplash.com/photo-1594708767771-a5e9d3c1e9c4?w=600', years_experience:'18', active:'TRUE' }
+  ],
+  contact: { email:'hello@qalasiti.com', phone:'+91 98765 43210', instagram:'https://instagram.com/qalasiti', linkedin:'https://linkedin.com/company/qalasiti', address:'New Delhi, India' }
+};
+
 // ── FETCH DATA ──────────────────────────────
 async function loadSiteData() {
+  // Always render fallback first so page is never empty
+  renderHero(FALLBACK.hero);
+  renderContent(FALLBACK.content);
+  renderProducts(FALLBACK.products);
+  renderArtisans(FALLBACK.artisans);
+  renderContact(FALLBACK.contact);
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Then try to fetch live data from Sheet and override
+  if (APPS_SCRIPT_URL.includes('YOUR_DEPLOYMENT_ID')) return; // skip if not configured
+
   try {
-    const res = await fetch(APPS_SCRIPT_URL + '?action=all');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(APPS_SCRIPT_URL + '?action=all', { signal: controller.signal });
+    clearTimeout(timeout);
     const data = await res.json();
     if (data.status !== 'ok') throw new Error(data.message);
 
     if (data.hero) renderHero(data.hero);
     if (data.content) renderContent(data.content);
-    if (data.products) renderProducts(data.products);
-    if (data.artisans) renderArtisans(data.artisans);
+    if (data.products && data.products.length) renderProducts(data.products);
+    if (data.artisans && data.artisans.length) renderArtisans(data.artisans);
     if (data.contact) renderContact(data.contact);
-
-    // Re-observe newly added elements
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    console.log('✅ Live data loaded from Google Sheet');
   } catch (err) {
-    console.warn('Could not load from Google Sheet. Using default content.', err);
-    // Silently fall back to default content already in HTML
-    document.querySelectorAll('[id$="-body"]').forEach(el => {
-      if (el.textContent === 'Loading...') el.textContent = 'Content will appear once the Google Sheet is connected.';
-    });
+    console.warn('Using fallback data. Connect your Google Sheet to go live.', err.message);
   }
 }
 
@@ -983,11 +1019,4 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
 
   btn.textContent = 'Send Message';
   btn.disabled = false;
-  setTimeout(() => { msg.className = 'form-message'; }, 6000);
-});
-
-// ── INIT ────────────────────────────────────
-loadSiteData();
-</script>
-</body>
-</html>
+  setTimeout(() => { msg.className
