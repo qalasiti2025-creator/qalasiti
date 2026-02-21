@@ -4,987 +4,466 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Qalasiti — Art of the Earth</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-  /* ── TOKENS ── */
-  :root {
-    --cream: #f0f4e8;
-    --cream-dark: #e4e9d6;
-    --ink: #111111;
-    --ink-light: #3a3a3a;
-    --ink-muted: #6b6b6b;
-    --gold: #c8a96e;
-    --gold-light: #e8d5b0;
-    --white: #fafafa;
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Jost', sans-serif;
-    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
+:root {
+  --cream:#f0f4e8; --cream-dark:#e4e9d6; --ink:#111111;
+  --ink-light:#3a3a3a; --ink-muted:#6b6b6b; --gold:#c8a96e;
+  --white:#fafafa; --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',sans-serif; --ease:0.4s cubic-bezier(.25,.46,.45,.94);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-weight:300;overflow-x:hidden}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  html { scroll-behavior: smooth; }
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .8s,visibility .8s}
+#loader.out{opacity:0;visibility:hidden}
+.loader-q{font-family:var(--serif);color:var(--cream);font-size:clamp(2rem,5vw,4rem);font-weight:300;letter-spacing:.3em;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
-  body {
-    background: var(--cream);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    font-weight: 300;
-    overflow-x: hidden;
-  }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:background var(--ease),padding var(--ease)}
+nav.scrolled{background:rgba(240,244,232,.96);backdrop-filter:blur(12px);padding:1rem 4rem;border-bottom:1px solid rgba(17,17,17,.08)}
+.logo{font-family:var(--serif);font-size:1.6rem;letter-spacing:.15em;color:var(--ink);text-decoration:none}
+.nav-ul{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-ul a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;transition:color var(--ease)}
+.nav-ul a:hover{color:var(--gold)}
+.nav-cta{background:var(--ink)!important;color:var(--cream)!important;padding:.6rem 1.4rem}
+.nav-cta:hover{background:var(--gold)!important;color:var(--ink)!important}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+.burger span{display:block;width:24px;height:1px;background:var(--ink)}
 
-  /* ── LOADER ── */
-  #loader {
-    position: fixed; inset: 0;
-    background: var(--ink);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-  }
-  #loader.hidden { opacity: 0; visibility: hidden; }
-  .loader-text {
-    font-family: var(--font-serif);
-    color: var(--cream);
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 300;
-    letter-spacing: 0.3em;
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.hero-l{background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 5rem 6rem;position:relative;overflow:hidden}
+.hero-l::before{content:'Q';position:absolute;top:-.1em;left:-.05em;font-family:var(--serif);font-size:40vw;line-height:1;color:rgba(255,255,255,.03);pointer-events:none}
+.hero-tag{font-family:var(--serif);font-size:clamp(2.8rem,5vw,5rem);font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:1.5rem;animation:fadeUp 1s ease .5s both}
+.hero-tag em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:.85rem;letter-spacing:.1em;color:rgba(240,244,232,.5);line-height:1.8;max-width:380px;margin-bottom:3rem;animation:fadeUp 1s ease .8s both}
+.hero-btn{display:inline-block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--cream);padding:1rem 2.5rem;text-decoration:none;transition:background var(--ease);animation:fadeUp 1s ease 1.1s both;width:fit-content}
+.hero-btn:hover{background:var(--gold)}
+.hero-r{background:var(--cream-dark);display:flex;align-items:center;justify-content:center;padding:6rem 4rem}
+.hero-r-inner{animation:fadeLeft 1s ease .6s both}
+.craft-label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.pillars{display:flex;flex-direction:column;gap:1.5rem}
+.pillar{display:flex;gap:1.2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(17,17,17,.1)}
+.pillar:last-child{border:none}
+.pillar-n{font-family:var(--serif);font-size:2rem;color:var(--gold);line-height:1;min-width:2rem}
+.pillar-t strong{display:block;font-family:var(--serif);font-size:1.2rem;font-weight:500;margin-bottom:.3rem}
+.pillar-t p{font-size:.78rem;color:var(--ink-muted);line-height:1.6}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1.5rem 4rem;
-    display: flex; align-items: center; justify-content: space-between;
-    background: transparent;
-    transition: background var(--transition), padding var(--transition);
-  }
-  nav.scrolled {
-    background: rgba(240, 244, 232, 0.95);
-    backdrop-filter: blur(12px);
-    padding: 1rem 4rem;
-    border-bottom: 1px solid rgba(17,17,17,0.08);
-  }
-  .nav-logo {
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .nav-links {
-    display: flex; gap: 2.5rem; list-style: none;
-    align-items: center;
-  }
-  .nav-links a {
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-    transition: color var(--transition);
-  }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    background: var(--ink) !important;
-    color: var(--cream) !important;
-    padding: 0.6rem 1.4rem;
-    letter-spacing: 0.15em !important;
-    transition: background var(--transition), color var(--transition) !important;
-  }
-  .nav-cta:hover { background: var(--gold) !important; color: var(--ink) !important; }
+/* MARQUEE */
+#strip{background:var(--ink);padding:2.5rem 4rem;overflow:hidden}
+.marquee{display:flex;gap:4rem;width:max-content;animation:scroll 25s linear infinite}
+.marquee span{font-family:var(--serif);font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(240,244,232,.35);white-space:nowrap}
+.marquee span.hi{color:var(--gold)}
+@keyframes scroll{to{transform:translateX(-50%)}}
 
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px; cursor: pointer;
-    background: none; border: none;
-  }
-  .hamburger span { display: block; width: 24px; height: 1px; background: var(--ink); transition: var(--transition); }
+/* SECTION BASE */
+.sec-label{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.sec-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.15;margin-bottom:2rem;max-width:700px}
+.sec-body{font-size:.9rem;line-height:2;color:var(--ink-light);max-width:640px;white-space:pre-line}
 
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-left {
-    background: var(--ink);
-    display: flex; flex-direction: column;
-    justify-content: flex-end;
-    padding: 8rem 5rem 6rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-left::before {
-    content: 'Q';
-    position: absolute;
-    top: -0.1em; left: -0.05em;
-    font-family: var(--font-serif);
-    font-size: 40vw;
-    line-height: 1;
-    color: rgba(255,255,255,0.03);
-    pointer-events: none;
-  }
-  .hero-tagline {
-    font-family: var(--font-serif);
-    font-size: clamp(2.8rem, 5vw, 5rem);
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--cream);
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
-    opacity: 0; transform: translateY(30px);
-    animation: fadeUp 1s ease 0.5s forwards;
-  }
-  .hero-tagline em { font-style: italic; color: var(--gold); }
-  .hero-subtitle-text {
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
-    color: rgba(240,244,232,0.55);
-    line-height: 1.8;
-    max-width: 380px;
-    margin-bottom: 3rem;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp 1s ease 0.8s forwards;
-  }
-  .hero-btn {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink);
-    background: var(--cream);
-    padding: 1rem 2.5rem;
-    text-decoration: none;
-    transition: background var(--transition), color var(--transition);
-    width: fit-content;
-    opacity: 0;
-    animation: fadeUp 1s ease 1.1s forwards;
-  }
-  .hero-btn:hover { background: var(--gold); }
+/* STORY */
+#story{background:var(--white);display:grid;grid-template-columns:1fr 1fr;padding:0}
+.story-panel{padding:8rem 5rem}
+.story-panel:first-child{border-right:1px solid var(--cream-dark)}
+.story-panel:last-child{background:var(--cream)}
 
-  .hero-right {
-    background: var(--cream-dark);
-    display: flex; align-items: center; justify-content: center;
-    padding: 6rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-right-content {
-    opacity: 0; transform: translateX(30px);
-    animation: fadeLeft 1s ease 0.6s forwards;
-  }
-  .hero-craft-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-  .hero-pillars {
-    display: flex; flex-direction: column; gap: 1.5rem;
-  }
-  .pillar {
-    display: flex; align-items: flex-start; gap: 1.2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(17,17,17,0.1);
-  }
-  .pillar:last-child { border-bottom: none; }
-  .pillar-num {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--gold);
-    line-height: 1;
-    min-width: 2rem;
-  }
-  .pillar-text strong {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-  }
-  .pillar-text p { font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.05em; line-height: 1.6; }
+/* MANIFESTO */
+#manifesto{background:var(--ink);color:var(--cream);text-align:center;padding:10rem 4rem;position:relative;overflow:hidden}
+#manifesto::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,169,110,.07),transparent 70%)}
+#manifesto .sec-title{color:var(--cream);max-width:900px;margin:0 auto 2rem;font-size:clamp(2.5rem,4.5vw,4rem);font-style:italic}
+#manifesto .sec-body{color:rgba(240,244,232,.6);margin:0 auto 3rem;text-align:left;max-width:680px}
+.bridges{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-top:3rem}
+.bridge{text-align:center;padding:2rem 1.5rem;border:1px solid rgba(200,169,110,.3);min-width:180px;transition:border-color var(--ease),transform var(--ease)}
+.bridge:hover{border-color:var(--gold);transform:translateY(-4px)}
+.bridge .bt{font-size:.65rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin:.4rem 0}
+.bridge .bm{font-family:var(--serif);font-size:1.1rem;color:var(--cream)}
 
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeLeft { to { opacity: 1; transform: translateX(0); } }
+/* PRODUCTS */
+#products{background:var(--cream);padding:8rem 4rem}
+.prod-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem}
+.filter-tabs{display:flex;gap:.5rem;flex-wrap:wrap}
+.ftab{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;padding:.5rem 1.2rem;border:1px solid rgba(17,17,17,.2);background:none;cursor:pointer;font-family:var(--sans);transition:all var(--ease)}
+.ftab:hover,.ftab.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem}
+.prod-card{background:var(--white);overflow:hidden;transition:transform var(--ease),box-shadow var(--ease)}
+.prod-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(17,17,17,.1)}
+.prod-img{position:relative;overflow:hidden;aspect-ratio:3/4}
+.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.prod-card:hover .prod-img img{transform:scale(1.05)}
+.prod-badge{position:absolute;top:1rem;left:1rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--cream);padding:.3rem .8rem}
+.prod-badge.gold{background:var(--gold);color:var(--ink)}
+.prod-info{padding:1.5rem}
+.prod-craft{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.prod-name{font-family:var(--serif);font-size:1.3rem;margin-bottom:.5rem}
+.prod-desc{font-size:.78rem;color:var(--ink-muted);line-height:1.7;margin-bottom:1.2rem}
+.prod-foot{display:flex;justify-content:space-between;align-items:center}
+.price-now{font-family:var(--serif);font-size:1.3rem}
+.price-was{font-size:.8rem;color:var(--ink-muted);text-decoration:line-through;margin-left:.4rem}
+.prod-qty{font-size:.68rem;color:var(--gold);margin-top:.4rem}
+.buy-btn{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;background:var(--ink);color:var(--cream);padding:.7rem 1.4rem;text-decoration:none;border:none;cursor:pointer;font-family:var(--sans);transition:background var(--ease);display:inline-block}
+.buy-btn:hover{background:var(--gold);color:var(--ink)}
+.buy-btn:disabled{background:rgba(17,17,17,.15);color:var(--ink-muted);cursor:default}
 
-  /* ── SECTIONS ── */
-  section { padding: 8rem 4rem; }
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
-    font-weight: 300;
-    line-height: 1.15;
-    margin-bottom: 2rem;
-    max-width: 700px;
-  }
-  .section-body {
-    font-size: 0.9rem;
-    line-height: 2;
-    color: var(--ink-light);
-    max-width: 640px;
-    white-space: pre-line;
-  }
+/* ARTISANS */
+#artisans{background:var(--white);padding:8rem 4rem}
+.artisan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2.5rem;margin-top:4rem}
+.artisan-card{display:grid;grid-template-columns:120px 1fr;gap:1.5rem;padding:2rem;border:1px solid var(--cream-dark);transition:border-color var(--ease),transform var(--ease)}
+.artisan-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.artisan-card img{width:120px;height:120px;object-fit:cover;filter:grayscale(30%);transition:filter var(--ease)}
+.artisan-card:hover img{filter:none}
+.a-state{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.a-name{font-family:var(--serif);font-size:1.4rem;margin-bottom:.3rem}
+.a-craft{font-size:.72rem;color:var(--ink-muted);letter-spacing:.1em;margin-bottom:.8rem}
+.a-bio{font-size:.78rem;line-height:1.8;color:var(--ink-light)}
+.a-exp{margin-top:.8rem;font-size:.65rem;letter-spacing:.1em;color:var(--gold)}
 
-  /* ── MISSION / VISION ── */
-  #story {
-    background: var(--white);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    padding: 0;
-  }
-  .story-panel {
-    padding: 8rem 5rem;
-    position: relative;
-  }
-  .story-panel:first-child {
-    background: var(--white);
-    border-right: 1px solid var(--cream-dark);
-  }
-  .story-panel:last-child { background: var(--cream); }
+/* CONTACT */
+#contact{display:grid;grid-template-columns:1fr 1fr;padding:0}
+.contact-l{padding:8rem 5rem;background:var(--ink);color:var(--cream)}
+.contact-l .sec-title{color:var(--cream)}
+.c-info{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem}
+.c-info .lbl{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.c-info .val{font-size:.9rem;color:rgba(240,244,232,.8)}
+.c-info a{color:inherit;text-decoration:none}
+.c-info a:hover{color:var(--gold)}
+.socials{display:flex;gap:1rem;margin-top:3rem}
+.soc{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid rgba(240,244,232,.3);padding:.6rem 1.2rem;color:var(--cream);text-decoration:none;transition:all var(--ease)}
+.soc:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.contact-r{padding:8rem 5rem;background:var(--white)}
+.cform{display:flex;flex-direction:column;gap:1.5rem}
+.fg{display:flex;flex-direction:column;gap:.5rem}
+.fg label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted)}
+.fg input,.fg select,.fg textarea{background:none;border:none;border-bottom:1px solid rgba(17,17,17,.2);padding:.8rem 0;font-family:var(--sans);font-size:.9rem;color:var(--ink);outline:none;width:100%;transition:border-color var(--ease)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg textarea{resize:none;height:100px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.sbtn{font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--cream);border:none;padding:1.2rem 3rem;cursor:pointer;transition:background var(--ease);width:fit-content}
+.sbtn:hover{background:var(--gold);color:var(--ink)}
+.fmsg{font-size:.8rem;padding:.8rem 1rem;display:none}
+.fmsg.ok{background:rgba(0,128,0,.1);color:green;display:block}
+.fmsg.err{background:rgba(255,0,0,.1);color:red;display:block}
 
-  /* ── MANIFESTO ── */
-  #manifesto {
-    background: var(--ink);
-    color: var(--cream);
-    text-align: center;
-    padding: 10rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  #manifesto::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, rgba(200,169,110,0.08) 0%, transparent 70%);
-  }
-  #manifesto .section-title {
-    color: var(--cream);
-    max-width: 900px;
-    margin: 0 auto 3rem;
-    font-size: clamp(2.5rem, 4.5vw, 4rem);
-    font-style: italic;
-  }
-  #manifesto .section-body {
-    color: rgba(240,244,232,0.65);
-    margin: 0 auto 4rem;
-    text-align: left;
-    max-width: 680px;
-  }
-  .manifesto-bridge {
-    display: flex;
-    gap: 3rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 4rem;
-  }
-  .bridge-item {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    border: 1px solid rgba(200,169,110,0.3);
-    min-width: 180px;
-    transition: border-color var(--transition), transform var(--transition);
-  }
-  .bridge-item:hover { border-color: var(--gold); transform: translateY(-4px); }
-  .bridge-item .top { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
-  .bridge-item .bottom { font-family: var(--font-serif); font-size: 1.1rem; color: var(--cream); }
+/* FOOTER */
+footer{background:var(--ink);color:rgba(240,244,232,.4);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.foot-logo{font-family:var(--serif);font-size:1.3rem;color:var(--cream);letter-spacing:.2em}
+.foot-tag{font-size:.72rem;letter-spacing:.15em;margin-top:.3rem}
+.foot-copy{font-size:.68rem}
 
-  /* ── PRODUCTS ── */
-  #products { background: var(--cream); }
-  .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
-  .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .filter-tab {
-    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
-    padding: 0.5rem 1.2rem; border: 1px solid rgba(17,17,17,0.2);
-    background: none; cursor: pointer; transition: all var(--transition);
-    font-family: var(--font-sans);
-  }
-  .filter-tab:hover, .filter-tab.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-  
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  .product-card {
-    background: var(--white);
-    overflow: hidden;
-    transition: transform var(--transition), box-shadow var(--transition);
-    position: relative;
-  }
-  .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(17,17,17,0.1); }
-  .product-img-wrap {
-    position: relative; overflow: hidden;
-    aspect-ratio: 3/4;
-  }
-  .product-img-wrap img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-  .product-card:hover .product-img-wrap img { transform: scale(1.05); }
-  .product-badge {
-    position: absolute; top: 1rem; left: 1rem;
-    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-    background: var(--ink); color: var(--cream);
-    padding: 0.3rem 0.8rem;
-  }
-  .product-badge.gold { background: var(--gold); color: var(--ink); }
-  .product-info { padding: 1.5rem; }
-  .product-craft { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-  .product-name { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.5rem; }
-  .product-desc { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.7; margin-bottom: 1.2rem; }
-  .product-footer { display: flex; justify-content: space-between; align-items: center; }
-  .product-price {
-    display: flex; align-items: baseline; gap: 0.5rem;
-  }
-  .price-current { font-family: var(--font-serif); font-size: 1.3rem; }
-  .price-original { font-size: 0.8rem; color: var(--ink-muted); text-decoration: line-through; }
-  .buy-btn {
-    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
-    background: var(--ink); color: var(--cream);
-    padding: 0.7rem 1.4rem;
-    text-decoration: none; border: none; cursor: pointer;
-    font-family: var(--font-sans);
-    transition: background var(--transition);
-    display: inline-block;
-  }
-  .buy-btn:hover { background: var(--gold); color: var(--ink); }
-  .buy-btn:disabled, .buy-btn.no-link {
-    background: rgba(17,17,17,0.2); color: var(--ink-muted); cursor: default;
-  }
-  .product-qty { font-size: 0.68rem; color: var(--ink-muted); margin-top: 0.5rem; }
-
-  /* ── ARTISANS ── */
-  #artisans { background: var(--white); }
-  .artisans-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2.5rem;
-    margin-top: 4rem;
-  }
-  .artisan-card {
-    display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem;
-    padding: 2rem; border: 1px solid var(--cream-dark);
-    transition: border-color var(--transition), transform var(--transition);
-  }
-  .artisan-card:hover { border-color: var(--gold); transform: translateY(-3px); }
-  .artisan-img {
-    width: 120px; height: 120px; object-fit: cover;
-    filter: grayscale(30%);
-    transition: filter var(--transition);
-  }
-  .artisan-card:hover .artisan-img { filter: grayscale(0); }
-  .artisan-state { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
-  .artisan-name { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 0.3rem; }
-  .artisan-craft { font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 0.8rem; }
-  .artisan-bio { font-size: 0.78rem; line-height: 1.8; color: var(--ink-light); }
-  .artisan-exp { margin-top: 0.8rem; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); }
-
-  /* ── INDIA STRIP ── */
-  #india-strip {
-    background: var(--ink);
-    padding: 3rem 4rem;
-    overflow: hidden;
-  }
-  .marquee-wrap { overflow: hidden; }
-  .marquee {
-    display: flex; gap: 4rem; width: max-content;
-    animation: marquee 20s linear infinite;
-  }
-  .marquee span {
-    font-family: var(--font-serif);
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(240,244,232,0.4);
-    white-space: nowrap;
-  }
-  .marquee span.highlight { color: var(--gold); }
-  @keyframes marquee { to { transform: translateX(-50%); } }
-
-  /* ── CONTACT ── */
-  #contact {
-    background: var(--cream);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    padding: 0;
-  }
-  .contact-left {
-    padding: 8rem 5rem;
-    background: var(--ink);
-    color: var(--cream);
-  }
-  .contact-left .section-title { color: var(--cream); }
-  .contact-info-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
-  .contact-info-item .label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
-  .contact-info-item .value { font-size: 0.9rem; color: rgba(240,244,232,0.8); }
-  .contact-info-item a { color: inherit; text-decoration: none; }
-  .contact-info-item a:hover { color: var(--gold); }
-  .social-links { display: flex; gap: 1rem; margin-top: 3rem; }
-  .social-link {
-    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-    border: 1px solid rgba(240,244,232,0.3);
-    padding: 0.6rem 1.2rem; color: var(--cream);
-    text-decoration: none; transition: all var(--transition);
-  }
-  .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-
-  .contact-right { padding: 8rem 5rem; }
-  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
-  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-  .form-group label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); }
-  .form-group input, .form-group select, .form-group textarea {
-    background: none; border: none; border-bottom: 1px solid rgba(17,17,17,0.2);
-    padding: 0.8rem 0; font-family: var(--font-sans); font-size: 0.9rem;
-    color: var(--ink); outline: none; transition: border-color var(--transition);
-    width: 100%;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: var(--gold);
-  }
-  .form-group textarea { resize: none; height: 100px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .submit-btn {
-    font-family: var(--font-sans); font-size: 0.72rem;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    background: var(--ink); color: var(--cream);
-    border: none; padding: 1.2rem 3rem;
-    cursor: pointer; transition: background var(--transition);
-    width: fit-content;
-  }
-  .submit-btn:hover { background: var(--gold); color: var(--ink); }
-  .form-message { font-size: 0.8rem; padding: 0.8rem 1rem; margin-top: 0.5rem; display: none; }
-  .form-message.success { background: rgba(0,128,0,0.1); color: green; display: block; }
-  .form-message.error { background: rgba(255,0,0,0.1); color: red; display: block; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    color: rgba(240,244,232,0.45);
-    padding: 3rem 4rem;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 1rem;
-  }
-  .footer-logo { font-family: var(--font-serif); font-size: 1.3rem; color: var(--cream); letter-spacing: 0.2em; }
-  .footer-tagline { font-size: 0.72rem; letter-spacing: 0.15em; }
-  .footer-copy { font-size: 0.68rem; letter-spacing: 0.1em; }
-
-  /* ── SKELETON LOADER ── */
-  .skeleton {
-    background: linear-gradient(90deg, rgba(17,17,17,0.06) 25%, rgba(17,17,17,0.12) 50%, rgba(17,17,17,0.06) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    border-radius: 2px;
-  }
-  @keyframes shimmer { to { background-position: -200% 0; } }
-
-  /* ── SCROLL REVEAL ── */
-  .reveal { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s ease; }
-  .js-ready .reveal { opacity: 0; transform: translateY(24px); }
-  .js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── MOBILE ── */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    nav.scrolled { padding: 0.8rem 2rem; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .nav-links.open {
-      display: flex; flex-direction: column;
-      position: fixed; inset: 0; top: 60px;
-      background: var(--cream); padding: 3rem 2rem;
-      align-items: center; justify-content: flex-start; gap: 2rem;
-    }
-    .nav-links.open a { font-size: 1.2rem; }
-    #hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 6rem 2rem 4rem; }
-    #story { grid-template-columns: 1fr; }
-    .story-panel { padding: 5rem 2rem; }
-    .story-panel:first-child { border-right: none; border-bottom: 1px solid var(--cream-dark); }
-    #contact { grid-template-columns: 1fr; }
-    .contact-left, .contact-right { padding: 5rem 2rem; }
-    section { padding: 5rem 2rem; }
-    .products-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-    .form-row { grid-template-columns: 1fr; }
-    footer { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .artisan-card { grid-template-columns: 1fr; }
-    .artisan-img { width: 80px; height: 80px; }
-    .manifesto-bridge { gap: 1rem; }
-    .bridge-item { min-width: 140px; }
-  }
+/* MOBILE */
+@media(max-width:900px){
+  nav,nav.scrolled{padding:1.2rem 2rem}
+  .nav-ul{display:none}
+  .burger{display:flex}
+  .nav-ul.open{display:flex;flex-direction:column;position:fixed;inset:0;top:60px;background:var(--cream);padding:3rem 2rem;align-items:center;gap:2rem;z-index:99}
+  .nav-ul.open a{font-size:1.2rem}
+  #hero,.#story,#contact{grid-template-columns:1fr}
+  #hero{grid-template-columns:1fr}
+  .hero-r{display:none}
+  .hero-l{padding:6rem 2rem 4rem}
+  #story{grid-template-columns:1fr}
+  .story-panel{padding:5rem 2rem}
+  .story-panel:first-child{border-right:none;border-bottom:1px solid var(--cream-dark)}
+  #contact{grid-template-columns:1fr}
+  .contact-l,.contact-r{padding:5rem 2rem}
+  #products,#artisans{padding:5rem 2rem}
+  .prod-header{flex-direction:column;align-items:flex-start;gap:1.5rem}
+  .frow{grid-template-columns:1fr}
+  footer{flex-direction:column;align-items:flex-start}
+  .artisan-card{grid-template-columns:1fr}
+  .bridges{gap:1rem}
+  .bridge{min-width:140px}
+}
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-text">QALASITI</div>
-</div>
+<div id="loader"><div class="loader-q">QALASITI</div></div>
 
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">Qalasiti</a>
-  <ul class="nav-links" id="nav-links">
+<nav id="nav">
+  <a href="#" class="logo">Qalasiti</a>
+  <ul class="nav-ul" id="nul">
     <li><a href="#story">Our Story</a></li>
     <li><a href="#manifesto">Manifesto</a></li>
     <li><a href="#products">Shop</a></li>
     <li><a href="#artisans">Artisans</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <div class="hero-left">
-    <h1 class="hero-tagline" id="hero-tagline">Art of the <em>Earth.</em></h1>
-    <p class="hero-subtitle-text" id="hero-subtitle"></p>
-    <a href="#products" class="hero-btn" id="hero-cta">Explore Collection</a>
+  <div class="hero-l">
+    <h1 class="hero-tag" id="htag">Art of the <em>Earth.</em></h1>
+    <p class="hero-sub" id="hsub">Where Indian heritage meets contemporary form — crafted by artisans, worn by the world.</p>
+    <a href="#products" class="hero-btn" id="hcta">Explore Collection</a>
   </div>
-  <div class="hero-right">
-    <div class="hero-right-content">
-      <div class="hero-craft-label">Every garment carries</div>
-      <div class="hero-pillars">
-        <div class="pillar">
-          <div class="pillar-num">I</div>
-          <div class="pillar-text">
-            <strong>The Skill of the Artisan</strong>
-            <p>Trained hands across generations, preserved in every stitch.</p>
-          </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">II</div>
-          <div class="pillar-text">
-            <strong>The Story of the Soil</strong>
-            <p>Each fabric rooted in a region, a people, a practice.</p>
-          </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">III</div>
-          <div class="pillar-text">
-            <strong>The Structure of Modern Design</strong>
-            <p>Contemporary silhouettes that carry heritage into the world.</p>
-          </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">IV</div>
-          <div class="pillar-text">
-            <strong>The Responsibility of Ethics</strong>
-            <p>Fair wages, slow production, conscious craft.</p>
-          </div>
-        </div>
+  <div class="hero-r">
+    <div class="hero-r-inner">
+      <div class="craft-label">Every garment carries</div>
+      <div class="pillars">
+        <div class="pillar"><div class="pillar-n">I</div><div class="pillar-t"><strong>The Skill of the Artisan</strong><p>Trained hands across generations, preserved in every stitch.</p></div></div>
+        <div class="pillar"><div class="pillar-n">II</div><div class="pillar-t"><strong>The Story of the Soil</strong><p>Each fabric rooted in a region, a people, a practice.</p></div></div>
+        <div class="pillar"><div class="pillar-n">III</div><div class="pillar-t"><strong>The Structure of Modern Design</strong><p>Contemporary silhouettes that carry heritage into the world.</p></div></div>
+        <div class="pillar"><div class="pillar-n">IV</div><div class="pillar-t"><strong>The Responsibility of Ethics</strong><p>Fair wages, slow production, conscious craft.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- INDIA STRIP -->
-<div id="india-strip">
-  <div class="marquee-wrap">
-    <div class="marquee" id="marquee-content">
-      <span class="highlight">Kashmir</span><span>·</span>
-      <span>Kani Weave</span><span>·</span>
-      <span class="highlight">Madhya Pradesh</span><span>·</span>
-      <span>Chanderi</span><span>·</span>
-      <span class="highlight">Uttar Pradesh</span><span>·</span>
-      <span>Banarasi Brocade</span><span>·</span>
-      <span class="highlight">Telangana</span><span>·</span>
-      <span>Double Ikat</span><span>·</span>
-      <span class="highlight">Rajasthan</span><span>·</span>
-      <span>Block Print</span><span>·</span>
-      <span class="highlight">Tamil Nadu</span><span>·</span>
-      <span>Kanjivaram</span><span>·</span>
-      <span class="highlight">Gujarat</span><span>·</span>
-      <span>Bandhani</span><span>·</span>
-      <!-- duplicate for seamless loop -->
-      <span class="highlight">Kashmir</span><span>·</span>
-      <span>Kani Weave</span><span>·</span>
-      <span class="highlight">Madhya Pradesh</span><span>·</span>
-      <span>Chanderi</span><span>·</span>
-      <span class="highlight">Uttar Pradesh</span><span>·</span>
-      <span>Banarasi Brocade</span><span>·</span>
-      <span class="highlight">Telangana</span><span>·</span>
-      <span>Double Ikat</span><span>·</span>
-      <span class="highlight">Rajasthan</span><span>·</span>
-      <span>Block Print</span><span>·</span>
-      <span class="highlight">Tamil Nadu</span><span>·</span>
-      <span>Kanjivaram</span><span>·</span>
-      <span class="highlight">Gujarat</span><span>·</span>
-      <span>Bandhani</span><span>·</span>
-    </div>
+<div id="strip">
+  <div class="marquee">
+    <span class="hi">Kashmir</span><span>·</span><span>Kani Weave</span><span>·</span><span class="hi">Madhya Pradesh</span><span>·</span><span>Chanderi</span><span>·</span><span class="hi">Uttar Pradesh</span><span>·</span><span>Banarasi Brocade</span><span>·</span><span class="hi">Telangana</span><span>·</span><span>Double Ikat</span><span>·</span><span class="hi">Rajasthan</span><span>·</span><span>Block Print</span><span>·</span><span class="hi">Tamil Nadu</span><span>·</span><span>Kanjivaram</span><span>·</span><span class="hi">Gujarat</span><span>·</span><span>Bandhani</span><span>·</span>
+    <span class="hi">Kashmir</span><span>·</span><span>Kani Weave</span><span>·</span><span class="hi">Madhya Pradesh</span><span>·</span><span>Chanderi</span><span>·</span><span class="hi">Uttar Pradesh</span><span>·</span><span>Banarasi Brocade</span><span>·</span><span class="hi">Telangana</span><span>·</span><span>Double Ikat</span><span>·</span><span class="hi">Rajasthan</span><span>·</span><span>Block Print</span><span>·</span><span class="hi">Tamil Nadu</span><span>·</span><span>Kanjivaram</span><span>·</span><span class="hi">Gujarat</span><span>·</span><span>Bandhani</span><span>·</span>
   </div>
 </div>
 
-<!-- STORY: MISSION + VISION -->
 <section id="story">
-  <div class="story-panel reveal" id="mission-panel">
-    <div class="section-label">Mission</div>
-    <h2 class="section-title" id="mission-title">Our Mission</h2>
-    <p class="section-body" id="mission-body">Loading...</p>
+  <div class="story-panel">
+    <div class="sec-label">Mission</div>
+    <h2 class="sec-title" id="mission-title">Our Mission</h2>
+    <p class="sec-body" id="mission-body">To create modern formal and semi-formal wear that seamlessly blends Indian artisanal heritage with contemporary western silhouettes — empowering individuals to wear culture with confidence, dignity, and global relevance.</p>
   </div>
-  <div class="story-panel reveal" id="vision-panel">
-    <div class="section-label">Vision</div>
-    <h2 class="section-title" id="vision-title">Our Vision</h2>
-    <p class="section-body" id="vision-body">Loading...</p>
+  <div class="story-panel">
+    <div class="sec-label">Vision</div>
+    <h2 class="sec-title" id="vision-title">Our Vision</h2>
+    <p class="sec-body" id="vision-body">To build a globally recognized platform where Indian heritage becomes a natural part of contemporary formal fashion — not as costume, but as culture integrated into everyday identity.</p>
   </div>
 </section>
 
-<!-- MANIFESTO -->
 <section id="manifesto">
-  <div class="section-label" style="color:var(--gold)">Manifesto</div>
-  <h2 class="section-title reveal" id="manifesto-title">Art of the Earth.</h2>
-  <p class="section-body reveal" id="manifesto-body">Loading...</p>
-  <div class="manifesto-bridge reveal">
-    <div class="bridge-item"><div class="top">Artisan</div><div class="bottom">↕</div><div class="top" style="margin-top:0.5rem">World</div></div>
-    <div class="bridge-item"><div class="top">Heritage</div><div class="bottom">↕</div><div class="top" style="margin-top:0.5rem">Modernity</div></div>
-    <div class="bridge-item"><div class="top">Craft</div><div class="bottom">↕</div><div class="top" style="margin-top:0.5rem">Commerce</div></div>
+  <div class="sec-label" style="color:var(--gold)">Manifesto</div>
+  <h2 class="sec-title" id="manifesto-title">Art of the Earth.</h2>
+  <p class="sec-body" id="manifesto-body">Indian art is not dying because it lacks beauty. It is fading because it lacks access. Qalasiti exists to change that. Every garment is a bridge between artisan and world, heritage and modernity, craft and commerce. Wear impact. Wear responsibility. Wear the art of the earth.</p>
+  <div class="bridges">
+    <div class="bridge"><div class="bt">Artisan</div><div class="bm">↕</div><div class="bt">World</div></div>
+    <div class="bridge"><div class="bt">Heritage</div><div class="bm">↕</div><div class="bt">Modernity</div></div>
+    <div class="bridge"><div class="bt">Craft</div><div class="bm">↕</div><div class="bt">Commerce</div></div>
   </div>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
-  <div class="products-header reveal">
-    <div>
-      <div class="section-label">Collection</div>
-      <h2 class="section-title" style="margin-bottom:0">Shop</h2>
-    </div>
-    <div class="filter-tabs" id="filter-tabs">
-      <button class="filter-tab active" data-filter="All">All</button>
-    </div>
+  <div class="prod-header">
+    <div><div class="sec-label">Collection</div><h2 class="sec-title" style="margin-bottom:0">Shop</h2></div>
+    <div class="filter-tabs" id="ftabs"><button class="ftab on" data-f="All">All</button></div>
   </div>
-  <div class="products-grid" id="products-grid">
-    <!-- Skeleton -->
-    <div style="background:var(--white);padding:1.5rem">
-      <div class="skeleton" style="height:350px;margin-bottom:1rem"></div>
-      <div class="skeleton" style="height:1rem;width:60%;margin-bottom:0.5rem"></div>
-      <div class="skeleton" style="height:1.5rem;width:80%;margin-bottom:1rem"></div>
-      <div class="skeleton" style="height:0.8rem;width:90%;margin-bottom:0.3rem"></div>
-    </div>
-    <div style="background:var(--white);padding:1.5rem">
-      <div class="skeleton" style="height:350px;margin-bottom:1rem"></div>
-      <div class="skeleton" style="height:1rem;width:60%;margin-bottom:0.5rem"></div>
-      <div class="skeleton" style="height:1.5rem;width:80%;margin-bottom:1rem"></div>
-      <div class="skeleton" style="height:0.8rem;width:90%;margin-bottom:0.3rem"></div>
-    </div>
-    <div style="background:var(--white);padding:1.5rem">
-      <div class="skeleton" style="height:350px;margin-bottom:1rem"></div>
-      <div class="skeleton" style="height:1rem;width:60%;margin-bottom:0.5rem"></div>
-      <div class="skeleton" style="height:1.5rem;width:80%;margin-bottom:1rem"></div>
-      <div class="skeleton" style="height:0.8rem;width:90%;margin-bottom:0.3rem"></div>
-    </div>
-  </div>
+  <div class="prod-grid" id="pgrid"></div>
 </section>
 
-<!-- ARTISANS -->
 <section id="artisans">
-  <div class="reveal">
-    <div class="section-label">Behind the Craft</div>
-    <h2 class="section-title">Meet the Artisans</h2>
-    <p style="font-size:0.88rem;color:var(--ink-muted);line-height:1.8;max-width:600px">
-      We collaborate with master craftspeople across India — celebrating them as co-creators, not suppliers. Every name behind a garment deserves to be known.
-    </p>
-  </div>
-  <div class="artisans-grid" id="artisans-grid">
-    <!-- loaded dynamically -->
-  </div>
+  <div class="sec-label">Behind the Craft</div>
+  <h2 class="sec-title">Meet the Artisans</h2>
+  <p style="font-size:.88rem;color:var(--ink-muted);line-height:1.8;max-width:600px">We celebrate artisans as co-creators, not suppliers. Every name behind a garment deserves to be known.</p>
+  <div class="artisan-grid" id="agrid"></div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact" style="padding:0">
-  <div class="contact-left">
-    <div class="section-label" style="color:var(--gold)">Get in Touch</div>
-    <h2 class="section-title">Let's Talk</h2>
-    <p style="font-size:0.85rem;color:rgba(240,244,232,0.6);line-height:1.9;max-width:380px;margin-top:1rem">
-      Whether you're looking for a piece, a partnership, or just want to know more about the craft — we'd love to hear from you.
-    </p>
-    <div class="contact-info-list" id="contact-info">
-      <div class="contact-info-item">
-        <div class="label">Email</div>
-        <div class="value"><a href="#" id="c-email">hello@qalasiti.com</a></div>
-      </div>
-      <div class="contact-info-item">
-        <div class="label">Phone</div>
-        <div class="value" id="c-phone">+91 98765 43210</div>
-      </div>
-      <div class="contact-info-item">
-        <div class="label">Based in</div>
-        <div class="value" id="c-address">India</div>
-      </div>
+  <div class="contact-l">
+    <div class="sec-label" style="color:var(--gold)">Get in Touch</div>
+    <h2 class="sec-title">Let's Talk</h2>
+    <p style="font-size:.85rem;color:rgba(240,244,232,.6);line-height:1.9;max-width:380px;margin-top:1rem">Whether you're looking for a piece, a partnership, or just want to know more — we'd love to hear from you.</p>
+    <div class="c-info">
+      <div><div class="lbl">Email</div><div class="val"><a id="c-email" href="mailto:hello@qalasiti.com">hello@qalasiti.com</a></div></div>
+      <div><div class="lbl">Phone</div><div class="val" id="c-phone">+91 98765 43210</div></div>
+      <div><div class="lbl">Based in</div><div class="val" id="c-addr">New Delhi, India</div></div>
     </div>
-    <div class="social-links">
-      <a href="#" class="social-link" id="c-instagram" target="_blank">Instagram</a>
-      <a href="#" class="social-link" id="c-linkedin" target="_blank">LinkedIn</a>
+    <div class="socials">
+      <a class="soc" id="c-ig" href="#" target="_blank">Instagram</a>
+      <a class="soc" id="c-li" href="#" target="_blank">LinkedIn</a>
     </div>
   </div>
-  <div class="contact-right">
-    <div class="section-label">Inquire</div>
-    <h2 class="section-title" style="margin-bottom:2rem">Send a Message</h2>
-    <form class="contact-form" id="contact-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" name="name" required placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" name="email" required placeholder="you@email.com">
-        </div>
+  <div class="contact-r">
+    <div class="sec-label">Inquire</div>
+    <h2 class="sec-title" style="margin-bottom:2rem">Send a Message</h2>
+    <form class="cform" id="cform">
+      <div class="frow">
+        <div class="fg"><label>Name</label><input name="name" required placeholder="Full name"></div>
+        <div class="fg"><label>Email</label><input type="email" name="email" required placeholder="you@email.com"></div>
       </div>
-      <div class="form-group">
-        <label>Subject</label>
+      <div class="fg"><label>Subject</label>
         <select name="subject">
-          <option value="Product Inquiry">Product Inquiry</option>
-          <option value="Custom Order">Custom Order</option>
-          <option value="Partnership">Partnership / Wholesale</option>
-          <option value="Artisan Collaboration">Artisan Collaboration</option>
-          <option value="General">General Question</option>
+          <option>Product Inquiry</option><option>Custom Order</option>
+          <option>Partnership / Wholesale</option><option>Artisan Collaboration</option><option>General</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea name="message" required placeholder="Tell us what you're looking for..."></textarea>
-      </div>
-      <button type="submit" class="submit-btn">Send Message</button>
-      <div class="form-message" id="form-message"></div>
+      <div class="fg"><label>Message</label><textarea name="message" required placeholder="Tell us what you're looking for..."></textarea></div>
+      <button type="submit" class="sbtn">Send Message</button>
+      <div class="fmsg" id="fmsg"></div>
     </form>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-logo">Qalasiti</div>
-    <div class="footer-tagline" style="margin-top:0.4rem">Wear impact. Wear responsibility. Wear the art of the earth.</div>
-  </div>
-  <div class="footer-copy">© 2025 Qalasiti. All rights reserved.</div>
+  <div><div class="foot-logo">Qalasiti</div><div class="foot-tag">Wear impact. Wear responsibility. Wear the art of the earth.</div></div>
+  <div class="foot-copy">© 2025 Qalasiti. All rights reserved.</div>
 </footer>
 
 <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFWt4oFy_2uitkqTJBXkESF3ikG3WKyvOtf00CFIIhrAT5UKuZQ_8huSbEOyzVFdgq/exec';
+// ══════════════════════════════════════════════════════════
+// YOUR GOOGLE APPS SCRIPT URL — update after redeployment
+// ══════════════════════════════════════════════════════════
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwFWt4oFy_2uitkqTJBXkESF3ikG3WKyvOtf00CFIIhrAT5UKuZQ_8huSbEOyzVFdgq/exec';
 
-// ── FALLBACK DATA (always shown; Sheet data overrides when available) ──
-const FALLBACK = {
-  hero: {
-    tagline: 'Art of the Earth.',
-    subtitle: 'Where Indian heritage meets contemporary form — crafted by artisans, worn by the world.',
-    cta_text: 'Explore Collection',
-    cta_link: '#products'
-  },
+// ── STATIC FALLBACK (always shown immediately) ──────────
+var FB = {
+  hero: { tagline:'Art of the Earth.', subtitle:'Where Indian heritage meets contemporary form — crafted by artisans, worn by the world.', cta_text:'Explore Collection', cta_link:'#products' },
   content: [
-    { section: 'mission', title: 'Our Mission', body: 'To create modern formal and semi-formal wear that seamlessly blends Indian artisanal heritage with contemporary western silhouettes — empowering individuals to wear culture with confidence, dignity, and global relevance.\n\nWe collaborate directly with artisans across India — from Kashmir to Kanyakumari — to transform traditional art forms into refined, structured, and wearable expressions for today\'s professional world.' },
-    { section: 'vision', title: 'Our Vision', body: 'To build a globally recognized platform where Indian heritage becomes a natural part of contemporary formal fashion — not as costume, but as culture integrated into everyday identity.\n\nFrom one state at a time, we aim to create a living archive of India\'s diverse art traditions — stitched into garments that move confidently across borders, boardrooms, and generations.' },
-    { section: 'manifesto', title: 'Art of the Earth.', body: 'Indian art is not dying because it lacks beauty.\nIt is fading because it lacks access.\n\nQalasiti exists to change that.\n\nWe work directly with artisans in small districts and heritage clusters — building fair partnerships, ensuring dignified wages, and transforming traditional craftsmanship into contemporary formal wear for a global audience.\n\nEvery garment is a bridge:\nBetween artisan and world.\nBetween heritage and modernity.\nBetween craft and commerce.\n\nWear impact. Wear responsibility. Wear the art of the earth.' }
+    { section:'mission', title:'Our Mission', body:'To create modern formal and semi-formal wear that seamlessly blends Indian artisanal heritage with contemporary western silhouettes — empowering individuals to wear culture with confidence, dignity, and global relevance.\n\nWe collaborate directly with artisans across India — from Kashmir to Kanyakumari.' },
+    { section:'vision',  title:'Our Vision',  body:'To build a globally recognized platform where Indian heritage becomes a natural part of contemporary formal fashion — not as costume, but as culture integrated into everyday identity.\n\nFrom one state at a time, we aim to create a living archive of India\'s diverse art traditions.' },
+    { section:'manifesto', title:'Art of the Earth.', body:'Indian art is not dying because it lacks beauty.\nIt is fading because it lacks access.\n\nQalasiti exists to change that.\n\nEvery garment is a bridge:\nBetween artisan and world.\nBetween heritage and modernity.\nBetween craft and commerce.\n\nWear impact. Wear responsibility. Wear the art of the earth.' }
   ],
   products: [
-    { id:'P001', name:'Kashmir Shawl Blazer', description:'A structured blazer featuring hand-embroidered Kashmiri paisley motifs on premium wool. Tailored for the modern boardroom.', price:'12500', original_price:'15000', image_url:'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600', quantity:'10', category:'Blazers', razorpay_link:'', badge:'New', artisan_state:'Jammu & Kashmir', craft_type:'Kani Weave' },
-    { id:'P002', name:'Chanderi Formal Shirt', description:'Lightweight Chanderi silk shirt with subtle woven patterns. Breathable, elegant, and effortlessly professional.', price:'4500', original_price:'', image_url:'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600', quantity:'25', category:'Shirts', razorpay_link:'', badge:'Bestseller', artisan_state:'Madhya Pradesh', craft_type:'Chanderi Weave' },
-    { id:'P003', name:'Banarasi Waistcoat', description:'A contemporary waistcoat in rich Banarasi brocade — a statement piece that carries centuries of craft.', price:'8500', original_price:'9500', image_url:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600', quantity:'15', category:'Waistcoats', razorpay_link:'', badge:'', artisan_state:'Uttar Pradesh', craft_type:'Banarasi Brocade' },
-    { id:'P004', name:'Ikat Structured Kurta', description:'Modern cut kurta in double Ikat fabric from Telangana. Minimal, architectural, and deeply rooted.', price:'6500', original_price:'', image_url:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600', quantity:'4', category:'Kurtas', razorpay_link:'', badge:'Limited', artisan_state:'Telangana', craft_type:'Double Ikat' }
+    { id:'P001', name:'Kashmir Shawl Blazer',   description:'A structured blazer featuring hand-embroidered Kashmiri paisley motifs on premium wool. Tailored for the modern boardroom.', price:'12500', original_price:'15000', image_url:'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600', quantity:'10', category:'Blazers',    razorpay_link:'', badge:'New',       artisan_state:'Jammu & Kashmir', craft_type:'Kani Weave'      },
+    { id:'P002', name:'Chanderi Formal Shirt',   description:'Lightweight Chanderi silk shirt with subtle woven patterns. Breathable, elegant, and effortlessly professional.',           price:'4500',  original_price:'',      image_url:'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600', quantity:'25', category:'Shirts',     razorpay_link:'', badge:'Bestseller', artisan_state:'Madhya Pradesh',  craft_type:'Chanderi Weave'  },
+    { id:'P003', name:'Banarasi Waistcoat',       description:'A contemporary waistcoat in rich Banarasi brocade — a statement piece that carries centuries of craft.',                   price:'8500',  original_price:'9500',  image_url:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600', quantity:'15', category:'Waistcoats', razorpay_link:'', badge:'',          artisan_state:'Uttar Pradesh',   craft_type:'Banarasi Brocade' },
+    { id:'P004', name:'Ikat Structured Kurta',   description:'Modern cut kurta in double Ikat fabric from Telangana. Minimal, architectural, and deeply rooted.',                       price:'6500',  original_price:'',      image_url:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600', quantity:'4',  category:'Kurtas',     razorpay_link:'', badge:'Limited',   artisan_state:'Telangana',       craft_type:'Double Ikat'     }
   ],
   artisans: [
-    { id:'A001', name:'Razia Begum', state:'Jammu & Kashmir', craft:'Kani Weave', bio:'Razia has been weaving Kani shawls in Kanihama village for over 30 years, keeping alive a tradition that dates back to the Mughal era.', image_url:'https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=600', years_experience:'30' },
-    { id:'A002', name:'Ramesh Patidar', state:'Madhya Pradesh', craft:'Chanderi Weave', bio:'Third-generation master weaver from Chanderi, Ramesh creates fabric so fine it is called "woven air" by those who wear it.', image_url:'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=600', years_experience:'22' },
-    { id:'A003', name:'Yellamma Devi', state:'Telangana', craft:'Double Ikat', bio:'Yellamma learned the intricate resist-dyeing technique of double Ikat from her mother. Each piece takes 3 weeks to complete.', image_url:'https://images.unsplash.com/photo-1594708767771-a5e9d3c1e9c4?w=600', years_experience:'18' }
+    { name:'Razia Begum',    state:'Jammu & Kashmir', craft:'Kani Weave',     bio:'Razia has been weaving Kani shawls in Kanihama village for over 30 years, keeping alive a tradition that dates back to the Mughal era.',        image_url:'https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=600', years_experience:'30' },
+    { name:'Ramesh Patidar', state:'Madhya Pradesh',  craft:'Chanderi Weave', bio:'Third-generation master weaver from Chanderi, Ramesh creates fabric so fine it is called "woven air" by those who wear it.',                    image_url:'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=600', years_experience:'22' },
+    { name:'Yellamma Devi',  state:'Telangana',       craft:'Double Ikat',    bio:'Yellamma learned the intricate resist-dyeing technique of double Ikat from her mother. Each piece takes 3 weeks to complete.',                   image_url:'https://images.unsplash.com/photo-1594708767771-a5e9d3c1e9c4?w=600', years_experience:'18' }
   ],
   contact: { email:'hello@qalasiti.com', phone:'+91 98765 43210', instagram:'https://instagram.com/qalasiti', linkedin:'https://linkedin.com/company/qalasiti', address:'New Delhi, India' }
 };
 
-// ── LOADER ──────────────────────────────────
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200);
-});
+// ── RENDER immediately from fallback ───────────────────
+renderAll(FB);
 
-// ── NAV SCROLL ──────────────────────────────
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 80);
-});
+// ── Then try to load live data via JSONP ───────────────
+(function() {
+  var cb = '_qs' + Math.random().toString(36).slice(2);
+  var s  = document.createElement('script');
+  var t  = setTimeout(function() { cleanup(); console.warn('Sheet timeout'); }, 10000);
 
-// ── HAMBURGER ───────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
-hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  function cleanup() { clearTimeout(t); delete window[cb]; if (s.parentNode) s.parentNode.removeChild(s); }
 
-// ── SCROLL REVEAL ───────────────────────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.05 });
-
-// ── MAIN INIT ───────────────────────────────
-// Render fallback FIRST — guaranteed visible content
-renderHero(FALLBACK.hero);
-renderContent(FALLBACK.content);
-renderProducts(FALLBACK.products);
-renderArtisans(FALLBACK.artisans);
-renderContact(FALLBACK.contact);
-
-// Set up scroll animations after content is painted
-setTimeout(() => {
-  document.body.classList.add('js-ready');
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}, 50);
-
-// Then try Sheet data via JSONP — non-blocking, 8s timeout
-(function loadFromSheet() {
-  const cbName = '_qscb_' + Math.random().toString(36).slice(2);
-  const script = document.createElement('script');
-  const timer = setTimeout(() => {
-    delete window[cbName];
-    script.remove();
-    console.warn('Sheet timeout — using fallback');
-  }, 8000);
-
-  window[cbName] = function(data) {
-    clearTimeout(timer);
-    delete window[cbName];
-    script.remove();
-    if (!data || data.status !== 'ok') return;
-    if (data.hero) renderHero(data.hero);
-    if (data.content) renderContent(data.content);
-    if (data.products && data.products.length) renderProducts(data.products);
-    if (data.artisans && data.artisans.length) renderArtisans(data.artisans);
-    if (data.contact) renderContact(data.contact);
-    console.log('Sheet data loaded live');
+  window[cb] = function(data) {
+    cleanup();
+    if (!data || data.status !== 'ok') { console.warn('Sheet error:', data); return; }
+    renderAll(data);
+    console.log('✅ Live Sheet data loaded');
   };
 
-  script.onerror = () => { clearTimeout(timer); delete window[cbName]; };
-  script.src = APPS_SCRIPT_URL + '?callback=' + cbName + '&action=all&t=' + Date.now();
-  document.head.appendChild(script);
+  s.onerror = function() { cleanup(); console.warn('Sheet script load error'); };
+  s.src = SHEET_URL + '?callback=' + cb + '&action=all&t=' + Date.now();
+  document.head.appendChild(s);
 })();
 
-// ── RENDER FUNCTIONS ────────────────────────
+// ── RENDER ALL ─────────────────────────────────────────
+function renderAll(d) {
+  if (d.hero)     renderHero(d.hero);
+  if (d.content)  renderContent(d.content);
+  if (d.products) renderProducts(d.products);
+  if (d.artisans) renderArtisans(d.artisans);
+  if (d.contact)  renderContact(d.contact);
+}
+
 function renderHero(h) {
   if (h.tagline) {
-    const words = h.tagline.trim().split(' ');
-    const last = words.pop();
-    document.getElementById('hero-tagline').innerHTML = words.join(' ') + ' <em>' + last + '</em>';
+    var w = h.tagline.trim().split(' '), last = w.pop();
+    document.getElementById('htag').innerHTML = w.join(' ') + ' <em>' + last + '</em>';
   }
-  if (h.subtitle) document.getElementById('hero-subtitle').textContent = h.subtitle;
-  if (h.cta_text) document.getElementById('hero-cta').textContent = h.cta_text;
-  if (h.cta_link) document.getElementById('hero-cta').href = h.cta_link;
+  if (h.subtitle) document.getElementById('hsub').textContent = h.subtitle;
+  if (h.cta_text) document.getElementById('hcta').textContent = h.cta_text;
+  if (h.cta_link) document.getElementById('hcta').href = h.cta_link;
 }
 
 function renderContent(items) {
-  items.forEach(item => {
-    const titleEl = document.getElementById(item.section + '-title');
-    const bodyEl  = document.getElementById(item.section + '-body');
-    if (titleEl && item.title) titleEl.textContent = item.title;
-    if (bodyEl  && item.body)  bodyEl.textContent  = item.body;
-  });
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var te = document.getElementById(item.section + '-title');
+    var be = document.getElementById(item.section + '-body');
+    if (te && item.title) te.textContent = item.title;
+    if (be && item.body)  be.textContent = item.body;
+  }
 }
 
-let allProducts = [];
-function renderProducts(products) {
-  allProducts = products;
-  const tabs = document.getElementById('filter-tabs');
-  const cats = ['All', ...new Set(products.map(p => p.category).filter(Boolean))];
-  tabs.innerHTML = cats.map(c =>
-    '<button class="filter-tab ' + (c==='All'?'active':'') + '" data-filter="' + c + '">' + c + '</button>'
-  ).join('');
-  tabs.querySelectorAll('.filter-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabs.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderProductCards(btn.dataset.filter === 'All' ? allProducts : allProducts.filter(p => p.category === btn.dataset.filter));
+var allProds = [];
+function renderProducts(prods) {
+  allProds = prods;
+  // Build filter tabs
+  var cats = ['All'];
+  for (var i = 0; i < prods.length; i++) { if (prods[i].category && cats.indexOf(prods[i].category) === -1) cats.push(prods[i].category); }
+  var tabs = document.getElementById('ftabs');
+  tabs.innerHTML = cats.map(function(c) {
+    return '<button class="ftab' + (c==='All'?' on':'') + '" data-f="' + c + '">' + c + '</button>';
+  }).join('');
+  tabs.querySelectorAll('.ftab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabs.querySelectorAll('.ftab').forEach(function(b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+      var f = btn.getAttribute('data-f');
+      renderProdCards(f === 'All' ? allProds : allProds.filter(function(p) { return p.category === f; }));
     });
   });
-  renderProductCards(products);
+  renderProdCards(prods);
 }
 
-function renderProductCards(products) {
-  const grid = document.getElementById('products-grid');
-  if (!products || !products.length) {
-    grid.innerHTML = '<p style="color:var(--ink-muted);font-size:0.85rem;grid-column:1/-1;text-align:center;padding:4rem 0">No products found.</p>';
-    return;
-  }
-  grid.innerHTML = products.map(function(p) {
-    var badgeHtml = p.badge ? '<div class="product-badge ' + (p.badge==='Bestseller'?'gold':'') + '">' + p.badge + '</div>' : '';
-    var origHtml  = p.original_price ? '<span class="price-original">\u20b9' + Number(p.original_price).toLocaleString('en-IN') + '</span>' : '';
-    var qtyHtml   = (p.quantity && Number(p.quantity) <= 5 && Number(p.quantity) > 0) ? '<div class="product-qty">Only ' + p.quantity + ' left</div>' : '';
-    var buyHtml   = p.razorpay_link
+function renderProdCards(prods) {
+  var g = document.getElementById('pgrid');
+  if (!prods || prods.length === 0) { g.innerHTML = '<p style="color:var(--ink-muted);grid-column:1/-1;text-align:center;padding:4rem 0;font-size:.85rem">No products found.</p>'; return; }
+  g.innerHTML = prods.map(function(p) {
+    var badge = p.badge ? '<div class="prod-badge' + (p.badge === 'Bestseller' ? ' gold' : '') + '">' + p.badge + '</div>' : '';
+    var orig  = p.original_price && p.original_price !== '' ? '<span class="price-was">&#8377;' + Number(p.original_price).toLocaleString('en-IN') + '</span>' : '';
+    var qty   = (p.quantity && Number(p.quantity) > 0 && Number(p.quantity) <= 5) ? '<div class="prod-qty">Only ' + p.quantity + ' left</div>' : '';
+    var buy   = p.razorpay_link && p.razorpay_link !== ''
       ? '<a href="' + p.razorpay_link + '" target="_blank" class="buy-btn">Buy Now</a>'
-      : '<button class="buy-btn no-link" disabled>Coming Soon</button>';
-    var imgSrc = p.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
-    return '<div class="product-card">'
-      + '<div class="product-img-wrap"><img src="' + imgSrc + '" alt="' + p.name + '" loading="lazy">' + badgeHtml + '</div>'
-      + '<div class="product-info">'
-      + '<div class="product-craft">' + (p.craft_type||'') + ' · ' + (p.artisan_state||'') + '</div>'
-      + '<div class="product-name">' + p.name + '</div>'
-      + '<div class="product-desc">' + p.description + '</div>'
-      + '<div class="product-footer"><div>'
-      + '<div class="product-price"><span class="price-current">\u20b9' + Number(p.price).toLocaleString('en-IN') + '</span>' + origHtml + '</div>'
-      + qtyHtml + '</div>' + buyHtml + '</div>'
-      + '</div></div>';
+      : '<button class="buy-btn" disabled>Coming Soon</button>';
+    var img   = p.image_url && p.image_url !== '' ? p.image_url : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
+    return '<div class="prod-card"><div class="prod-img"><img src="' + img + '" alt="' + p.name + '" loading="lazy">' + badge + '</div>'
+      + '<div class="prod-info"><div class="prod-craft">' + (p.craft_type||'') + ' &middot; ' + (p.artisan_state||'') + '</div>'
+      + '<div class="prod-name">' + p.name + '</div><div class="prod-desc">' + p.description + '</div>'
+      + '<div class="prod-foot"><div><div style="display:flex;align-items:baseline;gap:.4rem"><span class="price-now">&#8377;' + Number(p.price).toLocaleString('en-IN') + '</span>' + orig + '</div>' + qty + '</div>' + buy + '</div></div></div>';
   }).join('');
 }
 
-function renderArtisans(artisans) {
-  const grid = document.getElementById('artisans-grid');
-  if (!artisans || !artisans.length) { grid.innerHTML = '<p style="color:var(--ink-muted)">Artisan stories coming soon.</p>'; return; }
-  grid.innerHTML = artisans.map(function(a) {
-    return '<div class="artisan-card">'
-      + '<img class="artisan-img" src="' + (a.image_url||'https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=300') + '" alt="' + a.name + '" loading="lazy">'
-      + '<div>'
-      + '<div class="artisan-state">' + a.state + '</div>'
-      + '<div class="artisan-name">' + a.name + '</div>'
-      + '<div class="artisan-craft">' + a.craft + '</div>'
-      + '<div class="artisan-bio">' + a.bio + '</div>'
-      + (a.years_experience ? '<div class="artisan-exp">' + a.years_experience + ' years of craft</div>' : '')
+function renderArtisans(arts) {
+  var g = document.getElementById('agrid');
+  if (!arts || arts.length === 0) { g.innerHTML = '<p style="color:var(--ink-muted)">Artisan stories coming soon.</p>'; return; }
+  g.innerHTML = arts.map(function(a) {
+    var img = a.image_url && a.image_url !== '' ? a.image_url : 'https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=300';
+    return '<div class="artisan-card"><img src="' + img + '" alt="' + a.name + '" loading="lazy">'
+      + '<div><div class="a-state">' + (a.state||'') + '</div><div class="a-name">' + a.name + '</div>'
+      + '<div class="a-craft">' + (a.craft||'') + '</div><div class="a-bio">' + (a.bio||'') + '</div>'
+      + (a.years_experience && a.years_experience !== '' ? '<div class="a-exp">' + a.years_experience + ' years of craft</div>' : '')
       + '</div></div>';
   }).join('');
 }
 
 function renderContact(c) {
-  if (c.email)     { var el = document.getElementById('c-email'); el.textContent = c.email; el.href = 'mailto:' + c.email; }
+  if (c.email)     { var e = document.getElementById('c-email'); e.textContent = c.email; e.href = 'mailto:' + c.email; }
   if (c.phone)     document.getElementById('c-phone').textContent = c.phone;
-  if (c.address)   document.getElementById('c-address').textContent = c.address;
-  if (c.instagram) document.getElementById('c-instagram').href = c.instagram;
-  if (c.linkedin)  document.getElementById('c-linkedin').href = c.linkedin;
+  if (c.address)   document.getElementById('c-addr').textContent  = c.address;
+  if (c.instagram) document.getElementById('c-ig').href = c.instagram;
+  if (c.linkedin)  document.getElementById('c-li').href = c.linkedin;
 }
 
-// ── CONTACT FORM ────────────────────────────
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+// ── NAV / BURGER ───────────────────────────────────────
+window.addEventListener('scroll', function() { document.getElementById('nav').classList.toggle('scrolled', scrollY > 80); });
+setTimeout(function() { document.getElementById('loader').classList.add('out'); }, 1200);
+var nul = document.getElementById('nul');
+document.getElementById('burger').addEventListener('click', function() { nul.classList.toggle('open'); });
+nul.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { nul.classList.remove('open'); }); });
+
+// ── CONTACT FORM ───────────────────────────────────────
+document.getElementById('cform').addEventListener('submit', function(e) {
   e.preventDefault();
-  var btn = e.target.querySelector('.submit-btn');
-  var msg = document.getElementById('form-message');
+  var btn = e.target.querySelector('.sbtn'), msg = document.getElementById('fmsg');
   btn.textContent = 'Sending...'; btn.disabled = true;
   var payload = {};
-  new FormData(e.target).forEach(function(v,k){ payload[k]=v; });
-  fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify(payload) })
-    .then(function(r){ return r.json(); })
-    .then(function(result) {
-      if (result.status === 'ok') {
-        msg.className = 'form-message success';
-        msg.textContent = '✓ Message received! We\'ll be in touch soon.';
-        e.target.reset();
-      } else throw new Error();
-    }).catch(function() {
-      msg.className = 'form-message error';
-      msg.textContent = '✗ Something went wrong. Please email us directly.';
-    }).finally(function() {
-      btn.textContent = 'Send Message'; btn.disabled = false;
-      setTimeout(function(){ msg.className = 'form-message'; }, 6000);
-    });
+  new FormData(e.target).forEach(function(v,k) { payload[k] = v; });
+  fetch(SHEET_URL, { method:'POST', body: JSON.stringify(payload) })
+    .then(function(r) { return r.json(); })
+    .then(function(r) {
+      if (r.status === 'ok') { msg.className='fmsg ok'; msg.textContent='✓ Message received! We\'ll be in touch soon.'; e.target.reset(); }
+      else throw 0;
+    }).catch(function() { msg.className='fmsg err'; msg.textContent='✗ Something went wrong. Please email us directly.'; })
+    .finally(function() { btn.textContent='Send Message'; btn.disabled=false; setTimeout(function(){ msg.className='fmsg'; },6000); });
 });
 </script>
 </body>
