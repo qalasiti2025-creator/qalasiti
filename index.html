@@ -271,6 +271,82 @@ footer{background:var(--ink);color:rgba(240,244,232,.4);padding:3rem 4rem;displa
   .gallery-main{aspect-ratio:4/3}
   .cart-drawer{width:100vw}
 }
+
+/* ═══════════════════════════════════════
+   CHECKOUT MODAL
+═══════════════════════════════════════ */
+.checkout-overlay{position:fixed;inset:0;background:rgba(17,17,17,.65);z-index:700;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;display:flex;align-items:center;justify-content:center;padding:1rem}
+.checkout-overlay.open{opacity:1;visibility:visible}
+.checkout-box{background:var(--white);width:min(680px,100%);max-height:92vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+.checkout-overlay.open .checkout-box{transform:translateY(0)}
+.checkout-close{position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--ink);z-index:2;width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:color var(--ease)}
+.checkout-close:hover{color:var(--gold)}
+
+/* Steps */
+.co-steps{display:flex;border-bottom:1px solid var(--cream-dark);padding:0 2rem}
+.co-step{flex:1;padding:1.2rem 0;text-align:center;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);border-bottom:2px solid transparent;transition:all var(--ease);cursor:default}
+.co-step.active{color:var(--ink);border-bottom-color:var(--gold)}
+.co-step.done{color:var(--gold)}
+
+/* Form */
+.co-body{padding:2rem}
+.co-title{font-family:var(--serif);font-size:1.6rem;font-weight:300;margin-bottom:.3rem}
+.co-sub{font-size:.75rem;color:var(--ink-muted);letter-spacing:.08em;margin-bottom:2rem}
+.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.co-grid.single{grid-template-columns:1fr}
+.co-field{display:flex;flex-direction:column;gap:.4rem}
+.co-field.full{grid-column:1/-1}
+.co-field label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted)}
+.co-field input,.co-field select,.co-field textarea{border:1px solid rgba(17,17,17,.2);padding:.75rem 1rem;font-family:var(--sans);font-size:.85rem;color:var(--ink);background:var(--white);outline:none;transition:border-color var(--ease);width:100%}
+.co-field input:focus,.co-field select:focus,.co-field textarea:focus{border-color:var(--gold)}
+.co-field input.error,.co-field select.error{border-color:#c0392b}
+.co-field .err-msg{font-size:.62rem;color:#c0392b;display:none}
+.co-field.has-error .err-msg{display:block}
+.co-field.has-error input,.co-field.has-error select{border-color:#c0392b}
+.co-divider{border:none;border-top:1px solid var(--cream-dark);margin:1.5rem 0;grid-column:1/-1}
+
+/* Order summary in checkout */
+.co-summary{background:var(--cream-dark);padding:1.5rem;margin-bottom:1.5rem}
+.co-summary-title{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1rem}
+.co-summary-item{display:flex;justify-content:space-between;font-size:.82rem;padding:.4rem 0;border-bottom:1px solid rgba(17,17,17,.08)}
+.co-summary-item:last-child{border-bottom:none}
+.co-summary-item .co-si-name{color:var(--ink)}
+.co-summary-item .co-si-price{font-family:var(--serif)}
+.co-summary-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:1rem;padding-top:.8rem;border-top:1px solid rgba(17,17,17,.15)}
+.co-summary-total span:first-child{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted)}
+.co-summary-total .cst-price{font-family:var(--serif);font-size:1.4rem}
+
+/* Buttons */
+.co-footer{display:flex;gap:1rem;margin-top:2rem}
+.co-btn-back{flex:0 0 auto;background:none;border:1px solid rgba(17,17,17,.2);padding:.9rem 1.5rem;font-family:var(--sans);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all var(--ease)}
+.co-btn-back:hover{border-color:var(--ink)}
+.co-btn-next{flex:1;background:var(--ink);color:var(--cream);border:none;padding:1rem;font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background var(--ease);display:flex;align-items:center;justify-content:center;gap:.6rem}
+.co-btn-next:hover{background:var(--gold);color:var(--ink)}
+.co-btn-next:disabled{opacity:.5;cursor:not-allowed}
+.co-btn-next.loading::after{content:'';width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Payment step */
+.co-razorpay-info{background:#f8f4f0;border-left:3px solid var(--gold);padding:1rem 1.2rem;margin-bottom:1.5rem;font-size:.8rem;line-height:1.7;color:var(--ink-light)}
+.co-razorpay-info strong{color:var(--ink);font-weight:600}
+.co-pay-items{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
+.co-pay-item{display:flex;align-items:center;gap:.8rem;font-size:.8rem;color:var(--ink-light)}
+.co-pay-item::before{content:'✓';color:var(--gold);font-weight:700}
+
+/* Success step */
+.co-success{text-align:center;padding:3rem 2rem}
+.co-success-icon{font-size:3.5rem;margin-bottom:1rem}
+.co-success h2{font-family:var(--serif);font-size:2rem;font-weight:300;margin-bottom:.8rem}
+.co-success p{font-size:.85rem;color:var(--ink-muted);line-height:1.8;margin-bottom:2rem}
+.co-success .order-id{font-size:.72rem;letter-spacing:.2em;background:var(--cream-dark);padding:.6rem 1.2rem;display:inline-block;color:var(--ink);margin-bottom:2rem}
+.co-success-btn{background:var(--ink);color:var(--cream);border:none;padding:1rem 2.5rem;font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background var(--ease)}
+.co-success-btn:hover{background:var(--gold);color:var(--ink)}
+
+@media(max-width:600px){
+  .co-grid{grid-template-columns:1fr}
+  .co-field.full{grid-column:1}
+  .co-body{padding:1.5rem}
+}
 </style>
 </head>
 <body>
@@ -628,11 +704,7 @@ function updCount(){
   var el=document.getElementById('ccnt'); el.textContent=t; el.classList.toggle('show',t>0);
   var btn=document.getElementById('cartbtn'); if(btn){btn.classList.add('bounce');setTimeout(function(){btn.classList.remove('bounce');},400);}
 }
-function proceedCheckout(){
-  var linked=cart.filter(function(i){return i.rzp;});
-  if(linked.length) window.open(linked[0].rzp,'_blank');
-  else alert('To complete your purchase please contact us at hello@qalasiti.com with your cart details:\n\n'+cart.map(function(i){return i.qty+'x '+i.name+' ('+i.size+')'}).join('\n'));
-}
+function proceedCheckout(){ openCheckout(); }
 
 // Product Modal
 function openProductModal(pid){
@@ -698,6 +770,223 @@ function addToCart(){
 function buyNow(){ if(curProd&&curProd.razorpay_link) window.open(curProd.razorpay_link,'_blank'); }
 function showSizeGuide(){ alert('Size Guide\n\nXS — Chest 34\"\nS  — Chest 36\"\nM  — Chest 38\"\nL  — Chest 40\"\nXL — Chest 42\"\nXXL — Chest 44\"\n3XL — Chest 46\"\n\nFor custom sizing: hello@qalasiti.com'); }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){closeModal();closeCart();} if(document.getElementById('modal-overlay').classList.contains('open')){if(e.key==='ArrowLeft')galleryPrev();if(e.key==='ArrowRight')galleryNext();}});
+
+// ═══════════════════════════════════════════════════════
+// CHECKOUT FLOW
+// ═══════════════════════════════════════════════════════
+var coStep = 1;
+var coData = {};
+
+function openCheckout() {
+  if (!cart.length) return;
+  coStep = 1; coData = {};
+  closeCart();
+  renderCoStep();
+  document.getElementById('co-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('co-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleCoOverlay(e) { if (e.target === document.getElementById('co-overlay')) closeCheckout(); }
+
+function setCoSteps(active) {
+  [1,2,3].forEach(function(n) {
+    var el = document.getElementById('cstep-'+n);
+    el.className = 'co-step' + (n === active ? ' active' : (n < active ? ' done' : ''));
+  });
+}
+
+function renderCoStep() {
+  setCoSteps(coStep);
+  var body = document.getElementById('co-body');
+  if (coStep === 1) body.innerHTML = stepOneHTML();
+  if (coStep === 2) body.innerHTML = stepTwoHTML();
+  if (coStep === 3) body.innerHTML = stepThreeHTML();
+}
+
+// ── Step 1: Personal Details ──
+function stepOneHTML() {
+  return '<div class="co-title">Your Details</div>'
+    + '<div class="co-sub">We'll use this to confirm your order</div>'
+    + '<div class="co-grid">'
+    + field('co-fname','First Name','text',coData.fname||'','required')
+    + field('co-lname','Last Name','text',coData.lname||'','required')
+    + field('co-email','Email Address','email',coData.email||'','required full')
+    + field('co-phone','Phone Number','tel',coData.phone||'','+91 required')
+    + '</div>'
+    + coSummaryHTML()
+    + '<div class="co-footer">'
+    + '<button class="co-btn-next" onclick="submitStep1()">Continue to Shipping &rarr;</button>'
+    + '</div>';
+}
+
+function submitStep1() {
+  var fname = val('co-fname'), lname = val('co-lname'), email = val('co-email'), phone = val('co-phone');
+  var ok = true;
+  ok = validate('co-fname', fname.length > 1, 'Enter your first name') && ok;
+  ok = validate('co-lname', lname.length > 1, 'Enter your last name') && ok;
+  ok = validate('co-email', /^[^@]+@[^@]+\.[^@]+$/.test(email), 'Enter a valid email') && ok;
+  ok = validate('co-phone', phone.replace(/\D/g,'').length >= 10, 'Enter a valid phone number') && ok;
+  if (!ok) return;
+  coData.fname = fname; coData.lname = lname; coData.email = email; coData.phone = phone;
+  coStep = 2; renderCoStep();
+}
+
+// ── Step 2: Shipping Address ──
+function stepTwoHTML() {
+  return '<div class="co-title">Shipping Address</div>'
+    + '<div class="co-sub">Where should we deliver your order?</div>'
+    + '<div class="co-grid">'
+    + field('co-addr1','Address Line 1','text',coData.addr1||'','required full')
+    + field('co-addr2','Address Line 2 (Optional)','text',coData.addr2||'','full')
+    + field('co-city','City','text',coData.city||'','required')
+    + field('co-state','State','text',coData.state||'Rajasthan','required')
+    + field('co-pin','PIN Code','text',coData.pin||'','required')
+    + field('co-country','Country','text',coData.country||'India','required')
+    + '<div class="co-field full"><label>Order Notes (Optional)</label><textarea id="co-notes" rows="2" style="border:1px solid rgba(17,17,17,.2);padding:.75rem 1rem;font-family:var(--sans);font-size:.85rem;resize:vertical;width:100%;outline:none">'+(coData.notes||'')+'</textarea></div>'
+    + '</div>'
+    + '<div class="co-footer">'
+    + '<button class="co-btn-back" onclick="coStep=1;renderCoStep()">&#8592; Back</button>'
+    + '<button class="co-btn-next" onclick="submitStep2()">Continue to Payment &rarr;</button>'
+    + '</div>';
+}
+
+function submitStep2() {
+  var ok = true;
+  ok = validate('co-addr1', val('co-addr1').length > 3, 'Enter your address') && ok;
+  ok = validate('co-city',  val('co-city').length > 1, 'Enter your city') && ok;
+  ok = validate('co-state', val('co-state').length > 1, 'Enter your state') && ok;
+  ok = validate('co-pin',   /^\d{6}$/.test(val('co-pin')), 'Enter a valid 6-digit PIN') && ok;
+  if (!ok) return;
+  coData.addr1 = val('co-addr1'); coData.addr2 = val('co-addr2');
+  coData.city = val('co-city'); coData.state = val('co-state');
+  coData.pin = val('co-pin'); coData.country = val('co-country');
+  coData.notes = document.getElementById('co-notes') ? document.getElementById('co-notes').value : '';
+  coStep = 3; renderCoStep();
+}
+
+// ── Step 3: Payment ──
+function stepThreeHTML() {
+  var total = cart.reduce(function(s,i){return s+Number(i.price)*i.qty;},0);
+  var linked = cart.filter(function(i){return i.rzp;});
+  return '<div class="co-title">Review & Pay</div>'
+    + '<div class="co-sub">Almost there — review your order before paying</div>'
+    + coSummaryHTML()
+    + '<div style="background:var(--cream-dark);padding:1.2rem;margin-bottom:1.5rem;font-size:.78rem;line-height:1.9">'
+    + '<strong style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:.5rem">Delivering to</strong>'
+    + coData.fname+' '+coData.lname+' &nbsp;|&nbsp; '+coData.phone+'<br>'
+    + coData.addr1+(coData.addr2?', '+coData.addr2:'')+', '+coData.city+', '+coData.state+' - '+coData.pin
+    + '</div>'
+    + '<div class="co-pay-items">'
+    + '<div class="co-pay-item">Secure payment via Razorpay</div>'
+    + '<div class="co-pay-item">Order confirmation sent to '+coData.email+'</div>'
+    + '<div class="co-pay-item">Estimated delivery: 7–10 business days</div>'
+    + '</div>'
+    + '<div class="co-footer">'
+    + '<button class="co-btn-back" onclick="coStep=2;renderCoStep()">&#8592; Back</button>'
+    + (linked.length
+        ? '<button class="co-btn-next" id="pay-btn" onclick="initiatePayment()">Pay &#8377;'+total.toLocaleString('en-IN')+' &rarr;</button>'
+        : '<button class="co-btn-next" id="pay-btn" onclick="saveOrderNoPayment()">Place Order &rarr;</button>')
+    + '</div>';
+}
+
+// ── Payment via Razorpay ──
+function initiatePayment() {
+  var btn = document.getElementById('pay-btn');
+  btn.disabled = true; btn.classList.add('loading');
+  // First save order as "Pending Payment", then open Razorpay
+  var orderId = 'QLS-' + Date.now().toString(36).toUpperCase();
+  coData.orderId = orderId;
+  saveOrder('Pending Payment', function() {
+    btn.disabled = false; btn.classList.remove('loading');
+    // Open Razorpay link for first product with link (or all)
+    var linked = cart.filter(function(i){return i.rzp;});
+    if (linked.length) {
+      // Open each unique razorpay link
+      linked.forEach(function(item, i) {
+        setTimeout(function(){ window.open(item.rzp, '_blank'); }, i * 300);
+      });
+    }
+    // Show success screen
+    showOrderSuccess(orderId);
+  });
+}
+
+function saveOrderNoPayment() {
+  var btn = document.getElementById('pay-btn');
+  btn.disabled = true; btn.classList.add('loading');
+  var orderId = 'QLS-' + Date.now().toString(36).toUpperCase();
+  coData.orderId = orderId;
+  saveOrder('Confirmed', function() {
+    showOrderSuccess(orderId);
+  });
+}
+
+function saveOrder(status, callback) {
+  var total = cart.reduce(function(s,i){return s+Number(i.price)*i.qty;},0);
+  var orderPayload = {
+    action: 'order',
+    order_id: coData.orderId,
+    name: coData.fname + ' ' + coData.lname,
+    email: coData.email,
+    phone: coData.phone,
+    address: coData.addr1 + (coData.addr2 ? ', ' + coData.addr2 : '') + ', ' + coData.city + ', ' + coData.state + ' - ' + coData.pin + ', ' + coData.country,
+    notes: coData.notes || '',
+    items: cart.map(function(i){ return i.qty+'x '+i.name+' ('+i.size+')'; }).join(' | '),
+    total: total,
+    status: status,
+    timestamp: new Date().toISOString()
+  };
+  // POST to Apps Script
+  fetch(SHEET_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(orderPayload)
+  }).then(function(){ if(callback) callback(); }).catch(function(){ if(callback) callback(); });
+}
+
+function showOrderSuccess(orderId) {
+  setCoSteps(4); // all done
+  document.getElementById('co-body').innerHTML =
+    '<div class="co-success">'
+    + '<div class="co-success-icon">&#10003;</div>'
+    + '<h2>Order Placed!</h2>'
+    + '<p>Thank you, '+coData.fname+'. Your order has been received.<br>A confirmation will be sent to <strong>'+coData.email+'</strong>.</p>'
+    + '<div class="order-id">Order ID: '+orderId+'</div><br>'
+    + '<button class="co-success-btn" onclick="closeCheckout();cart=[];updCount();">Continue Shopping</button>'
+    + '</div>';
+}
+
+// ── Helpers ──
+function coSummaryHTML() {
+  var total = cart.reduce(function(s,i){return s+Number(i.price)*i.qty;},0);
+  return '<div class="co-summary">'
+    + '<div class="co-summary-title">Order Summary</div>'
+    + cart.map(function(i){
+        return '<div class="co-summary-item"><span class="co-si-name">'+i.name+' <span style="color:var(--ink-muted);font-size:.75em">× '+i.qty+' ('+i.size+')</span></span>'
+        +'<span class="co-si-price">&#8377;'+(Number(i.price)*i.qty).toLocaleString('en-IN')+'</span></div>';
+      }).join('')
+    + '<div class="co-summary-total"><span>Total</span><span class="cst-price">&#8377;'+total.toLocaleString('en-IN')+'</span></div>'
+    + '</div>';
+}
+
+function field(id, label, type, value, extra) {
+  var isFull = (extra||'').indexOf('full') > -1;
+  return '<div class="co-field'+(isFull?' full':'')+'" id="wrap-'+id+'">'
+    +'<label>'+label+'</label>'
+    +'<input id="'+id+'" type="'+type+'" value="'+value+'" placeholder="'+label+'">'
+    +'<span class="err-msg" id="err-'+id+'"></span>'
+    +'</div>';
+}
+function val(id) { var el=document.getElementById(id); return el ? el.value.trim() : ''; }
+function validate(id, condition, msg) {
+  var wrap=document.getElementById('wrap-'+id), err=document.getElementById('err-'+id);
+  if (!wrap) return condition;
+  if (!condition) { wrap.classList.add('has-error'); if(err) err.textContent=msg; return false; }
+  wrap.classList.remove('has-error'); if(err) err.textContent=''; return true;
+}
 </script>
 
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
@@ -742,6 +1031,25 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'){closeModal
       <button class="buy-now-btn" id="bynow" style="display:none" onclick="buyNow()">Buy Now via Razorpay</button>
       <hr class="modal-divider">
       <div class="modal-details" id="mdetails"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-overlay" id="co-overlay" onclick="handleCoOverlay(event)">
+  <div class="checkout-box" id="co-box">
+    <button class="checkout-close" onclick="closeCheckout()">&#10005;</button>
+
+    <!-- Steps indicator -->
+    <div class="co-steps">
+      <div class="co-step active" id="cstep-1">1. Details</div>
+      <div class="co-step" id="cstep-2">2. Shipping</div>
+      <div class="co-step" id="cstep-3">3. Payment</div>
+    </div>
+
+    <div class="co-body" id="co-body">
+      <!-- Injected by JS -->
     </div>
   </div>
 </div>
